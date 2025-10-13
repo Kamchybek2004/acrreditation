@@ -1,0 +1,47 @@
+{% extends "core/base.html" %}
+{% block title %}Направления и профили{% endblock %}
+
+{% block content %}
+<h3 class="mb-4 text-primary text-center">Перечень образовательных программ</h2>
+<p class="text-dark fs-5 text-center">Аккредатицонный портал колледжа <br>
+    "Иностранные языки и программирование компьютерных систем" <br>
+     НГУ им. С. Нааматова</p>
+
+<hr>
+
+<h4 class="mb-4">Направления и профили подготовки</h2>
+
+<table class="table table-bordered table-striped align-middle">
+    <thead class="table-primary">
+        <tr class="text-center">
+            <th style="width: 10%;">Код (шифр)</th>
+            <th style="width: 30%;">Направление</th>
+            <th style="width: 35%;">Профиль</th>
+            <th style="width: 25%;">Форма обучения</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for major in majors %}
+            {% for profile in major.profiles.all %}
+                <tr>
+                    {% if forloop.first %}
+                        <td class="text-center" rowspan="{{ major.profiles.count }}">{{ major.code }}</td>
+                        <td rowspan="{{ major.profiles.count }}">{{ major.name }}</td>
+                    {% endif %}
+                    <td>
+                        <a href="{% url 'core:profile_detail' profile.pk %}" class="text-decoration-none">
+                            {{ profile.name }}
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        {% if profile.full_time %}Очная{% endif %}
+                        {% if profile.part_time %}{% if profile.full_time %}, {% endif %}Заочная{% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="4" class="text-center">Нет данных</td></tr>
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

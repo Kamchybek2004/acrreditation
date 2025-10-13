@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Личный кабинет{% endblock %}
+
+{% block content %}
+<h2>Личный кабинет</h2>
+<p><strong>Логин:</strong> {{ user.username }}</p>
+<p><strong>Email:</strong> {{ user.email }}</p>
+
+{% if profile %}
+<p><strong>Отдел:</strong> {{ profile.department }}</p>
+<p><strong>Документы:</strong> {{ profile.documents.all|length }}</p>
+<p><strong>Модули:</strong> {{ profile.modules.all|length }}</p>
+{% endif %}
+{% endblock %}

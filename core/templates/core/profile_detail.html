@@ -1,0 +1,95 @@
+{% extends "core/base.html" %}
+{% block title %}{{ profile.name }}{% endblock %}
+
+{% block content %}
+<h4 class="text-center mb-3"><strong>Профиль:</strong> {{ profile.name }}</h4>
+<h5><strong>Направление:</strong> {{ profile.major.name }} ({{ profile.major.code }})</h5>
+<p>
+    <strong>Форма обучения:</strong>
+    {% if profile.full_time %}Очная{% endif %}
+    {% if profile.part_time %}{% if profile.full_time %}, {% endif %}Заочная{% endif %}
+</p>
+
+<hr>
+
+<h5 class="text-center mb-4 mt-5">Перечень документов профиля</h5>
+<table class="table table-sm table-bordered align-middle">
+    <thead class="table-light">
+        <tr class="text-center">
+            <th>Название</th>
+            <th>Файл</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for doc in documents %}
+            <tr>
+                <td>{{ doc.title }}</td>
+                {% if doc.file %}
+                    <td class="text-center"><a class="text-decoration-none" href="{{ doc.file.url }}" target="_blank">PDF <i class="bi bi-file-earmark-pdf"></i></a></td>
+                {% else %}
+                    —
+                {% endif %}
+            </tr>
+        {% empty %}
+            <tr><td colspan="3" class="text-center">Нет документов</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<hr>
+
+<h5 class="text-center mb-4 mt-5">Паспорта и программы формирования компетенций</h5>
+
+{% if passports %}
+    <div class="d-flex flex-wrap justify-content-start gap-2">
+        {% for p in passports %}
+            <div class="card shadow-sm border-0" style="width: 200px; flex: 0 0 auto;">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <h6 class="card-title text-primary fw-bold text-center" style="font-size: 0.95rem;">
+                        {{ p.title }}
+                    </h6>
+
+                    {% if p.file %}
+                        <a href="{{ p.file.url }}" target="_blank" class="btn btn-outline-primary mt-3 w-100 btn-sm">
+                            PDF <i class="bi bi-file-earmark-pdf"></i>
+                        </a>
+                    {% else %}
+                        <p class="text-muted mt-3 text-center small">Файл отсутствует</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-secondary text-center mt-3">Нет паспортов</div>
+{% endif %}
+
+<hr>
+
+<h5 class="text-center mb-4 mt-5">Программа дисциплин, модулей и практик</h5>
+<table class="table table-sm table-bordered align-middle">
+    <thead class="table-light">
+        <tr class="text-center">
+            <th>Дисциплина / модуль</th>
+            <th>Аннотация</th>
+            <th>Программа</th>
+            <th>ФOC</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for m in modules %}
+            <tr>
+                <td>{{ m.name }}</td>
+                <td class="text-center"><a class="text-decoration-none" href="{{ m.annotation.url }}" target="_blank">PDF <i class="bi bi-file-earmark-pdf"></i></a></td>
+                <td class="text-center"><a class="text-decoration-none" href="{{ m.syllabus.url }}" target="_blank">PDF <i class="bi bi-file-earmark-pdf"></i></a></td>
+                <td class="text-center"><a class="text-decoration-none" href="{{ m.assessment_fund.url }}" target="_blank">PDF <i class="bi bi-file-earmark-pdf"></i></a></td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="4" class="text-center">Нет дисциплин/модулей</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="d-flex justify-content-end">
+    <a href="{% url 'core:index' %}" class="btn btn-outline-primary mt-2">← Назад</a>
+</div>
+{% endblock %}
