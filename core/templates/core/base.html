@@ -25,10 +25,6 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     {% if user.is_authenticated %}
-                        <!-- Если пользователь вошёл -->
-                        <!--<li class="nav-item">
-                            <a class="nav-link" href="{% url 'core:user_profile' %}">Личный кабинет</a>
-                        </li>-->
                         {% if user.is_staff %}
                         <li class="nav-item">
                             <a class="nav-link text-light" href="{% url 'admin:index' %}">Админ</a>
