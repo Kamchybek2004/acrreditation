@@ -4,7 +4,7 @@ from .models import Major, Profile, ProfileDocument, CompetencePassport, Module
 admin.site.site_header = "Панель управление аккредитацией"       
 admin.site.site_title = "админ панель"       
 admin.site.index_title = "Аккредитация"       
-
+    
 class ProfileInline(admin.TabularInline):
     model = Profile
     extra = 0
