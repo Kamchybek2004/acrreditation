@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -12,7 +13,7 @@
         <div class="container">
             
             <a href="{% url 'core:index' %}">
-                <img height="40" class="me-2" src="https://drive.usercontent.google.com/download?id=1l5cUF1MLdmhBx0zF25t_v3Siq7zTCFtc&export=view&authuser=0" alt="logo">
+                <img height="40" class="me-2" src="{% static 'img/logo.png' %}" alt="logo">
             </a>
 
             <a class="navbar-brand" href="{% url 'core:index' %}">Главная</a>
